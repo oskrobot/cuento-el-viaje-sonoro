@@ -1,0 +1,597 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background: #ddd;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.wrapper {
+  position: relative;
+  width: min(1000px, 100vw - 32px);
+  height: min(680px, 100vh - 32px);
+  background: #fafafa;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.book {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 2000px;
+  overflow: hidden;
+}
+
+/* Spreads (dobles páginas) */
+
+.spread {
+  position: absolute;
+  inset: 0;
+  display: none;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  z-index: 1;
+}
+
+.spread.active {
+  display: flex;
+}
+
+/* Spread que está encima durante la animación */
+.spread.is-top {
+  z-index: 2;
+}
+
+/* PORTADA: imagen a pantalla completa dentro del libro */
+
+.spread.cover {
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;   /* 🔹 Muestra toda la imagen sin recortarla */
+  display: block;
+}
+
+/*.cover-start-btn {
+  position: absolute;
+  top: 50%;          
+  right: 312px;       
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%);
+  z-index: 5;  
+}*/
+
+/* Estilo base del botón "Iniciar cuento" */
+.btn.cover-start-btn {
+  position: absolute;
+  top: 66%;
+  right: 312px;
+  transform: translateY(-50%);                 /* centrado vertical fijo */
+  z-index: 5;
+  font-size: 0.65rem;
+  padding: 5px 15px;
+  background: rgba(8, 45, 80, 0.78);           /* azul petróleo semitransparente */
+  color: #ffffff;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(3px);                  /* efecto vidrio suave */
+}
+
+/* PÁGINAS */
+
+.page {
+  flex: 1;  
+  padding: 90px 26px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+
+  /* Para el efecto de hoja que gira */
+  position: relative;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Página izquierda: gira sobre el borde derecho (lomo) */
+.spread .page:first-child {
+  transform-origin: right center;
+}
+
+/* Página derecha: gira sobre el borde izquierdo (lomo) */
+.spread .page:last-child {
+  transform-origin: left center;
+}
+
+.page + .page {
+  border-left: 1px solid #ddd;
+}
+
+.page img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.page h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #2d2b55;
+}
+
+.page p {
+  font-size: 1rem;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+
+/* BOTONES */
+
+.btn {
+  background: rgba(20, 48, 71, 0.85);             /* azul oscuro semitransparente */
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.85);    /* borde clarito */
+  border-radius: 999px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.6rem;
+  font-family: inherit;
+  backdrop-filter: blur(3px);                     /* efecto “vidrio” suave */
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.btn:hover {
+  /*transform: translateY(-1px);*/
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  background: rgba(248, 250, 252, 0.95);         /* casi blanco */
+  color: #143047;                                /* azul oscuro de texto */
+  border-color: rgba(20, 48, 71, 0.9);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-primary {
+  /* si quieres que el de portada se vea un poco más cálido */
+  background: rgba(242, 148, 61, 0.9);           /* basado en tu #f2943d */
+  color: #143047;
+}
+
+.btn-secondary {
+  background: rgba(20, 48, 71, 0.75);
+}
+
+.btn-small {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Contenedor botón + barra de audio */
+.page-audio-control {
+  margin-top: 24px;
+  align-self: center;           
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Botón de narración dentro del contenedor */
+.page-audio-control .btn-audio {
+  margin: 0;
+}
+
+/* Estado visual cuando está reproduciendo */
+.btn-audio.is-playing {
+  background: rgba(248, 250, 252, 0.95);
+  color: #143047;
+  border-color: rgba(20, 48, 71, 0.9);
+}
+
+/* Botón de "Escuchar narración de esta página" dentro de la hoja */
+.btn-audio {
+  margin-top: 16px;      /* separa el botón del texto, pero sin empujarlo al borde */
+  align-self: center;    /* centrado en la página de texto */
+}
+
+/* Estado visual cuando el audio está reproduciéndose */
+.btn-audio.is-playing {
+  background: #fff;
+  color: #2d2b55;
+}
+
+/* Barra de progreso de la narración */
+.audio-progress {
+  width: 70%;
+  max-width: 260px;
+  height: 6px;
+  border-radius: 999px;
+  margin: 8px auto 0;
+  background: rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+}
+
+.audio-progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #2d2b55, #ff7b54);
+  transition: width 0.1s linear;
+}
+
+/* CONTROLES */
+
+.controls-bottom {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.controls-top {
+  position: absolute;
+  top: 8px;
+  right: 18px;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.info-audio {
+  position: absolute;
+  top: 8px;
+  left: 18px;
+  font-size: 0.7rem;
+  color: #143047;
+  background: rgba(248, 255, 252, 0.9);
+  padding: 2px 10px;
+  border-radius: 999px;
+  z-index: 10;
+  backdrop-filter: blur(3px);
+}
+
+/* ---------- Efecto realista de pasar página ---------- */
+
+.page-turn-next {
+  animation: pageTurnNext 0.9s ease-out forwards;
+  z-index: 2;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  /*transform-origin: left center;*/
+}
+
+.page-turn-prev {
+  animation: pageTurnPrev 0.9s ease-out forwards;
+  z-index: 2;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  /*transform-origin: right center;*/
+}
+
+/* Ir hacia adelante: la página derecha se levanta y gira hacia la izquierda */
+@keyframes pageTurnNext {
+  0% {
+    transform: rotateY(-120deg);  /* viene desde la derecha */
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+/* Ir hacia atrás: la página izquierda aparece “volviendo” desde la derecha */
+@keyframes pageTurnPrev {
+  0% {
+    transform: rotateY(120deg);   /* viene desde la izquierda */
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+/* --- Diseño especial DOBLE PÁGINA 1 (imagen + texto) --- */
+
+/* Página izquierda: ilustración a todo el espacio */
+.page-intro-image {
+  padding: 0;
+  background: #000; /* solo mientras carga la imagen */
+}
+
+.page-intro-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* la imagen llena la página sin deformarse */
+  display: block;
+}
+
+/* Página derecha: fondo amarillo y texto centrado verticalmente */
+.page-intro-text {
+  background: #f2943d;
+  justify-content: center;
+}
+
+.page-intro-text-inner {
+  max-width: 80%;
+  margin: 0 auto;
+  color: #143047;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* El botón de audio se mantiene abajo a la izquierda */
+.page-intro-text .btn-audio {
+  margin-top: 24px;
+}
+
+/* Barra de progreso de la narración */
+.audio-progress {
+  width: 70%;
+  max-width: 260px;
+  height: 6px;
+  border-radius: 999px;
+  margin: 8px auto 0;
+  background: rgba(255, 255, 255, 0.4);   /* clarito y semitransparente */
+  overflow: hidden;
+}
+
+.audio-progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #143047, #f2943d);
+  transition: width 0.1s linear;
+}
+
+/* Cuando el audio está en reproducción, marcamos el botón */
+.btn-audio.is-playing {
+  background: rgba(248, 250, 252, 0.95);
+  color: #143047;
+  border-color: rgba(20, 48, 71, 0.9);
+}
+
+/* --- DOBLE PÁGINA 2: texto izquierda + imagen derecha --- */
+
+/* Página izquierda: fondo suave para que el texto respire */
+.page-escena2-text {
+  background: #fdf1e3; /* tono clarito derivado del naranja #f2943d */
+  justify-content: flex-start;
+}
+
+/* Bloque de texto centrado horizontalmente */
+.page-escena2-text-inner {
+  max-width: 75%;
+  margin: 0 auto;
+}
+
+/* “Tum, tum, tum…” un poco destacado */
+.page-escena2-text-inner .onomatopeya {
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: 12px 0 16px;
+}
+
+/* Botón de audio debajo del texto, centrado */
+.page-escena2-text .btn-audio {
+  margin-top: 24px;
+  align-self: center;
+}
+
+/* Página derecha: imagen a todo el espacio */
+.page-escena2-image {
+  padding: 0;
+  background: #000; /* por si la imagen tarda en cargar */
+}
+
+.page-escena2-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* llena la página sin deformarse */
+  display: block;
+}
+
+/* ================================
+   FORMATO COMÚN PARA PÁGINAS DE CUENTO
+   (todas las spreads excepto la portada)
+================================ */
+
+/* Las páginas ya tienen flex: 1; desde .page */
+
+.spread-story .page--image {
+  padding: 0;
+  background: #000; /* mientras carga la imagen */
+}
+
+.spread-story .page--image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* la imagen llena la hoja sin deformarse */
+  display: block;
+}
+
+/* Página de texto: fondo naranja del cuento y layout en columna */
+.spread-story .page--text {
+  background: #f2943d;                  /* mismo color que ya estabas usando */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 40px 32px 40px;              /* espacio arriba y abajo */
+}
+
+/* Por defecto, sin scroll visible */
+.spread-story .page--text {
+  overflow-y: hidden;
+}
+
+/* Solo si la página tiene más contenido del que cabe,
+   se le activará esta clase desde JS */
+.spread-story .page--text.scrollable {
+  overflow-y: auto;
+}
+
+/* Scrollbar discreta para que no “canten” las barras en portátil */
+.spread-story .page--text.scrollable {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(20, 48, 71, 0.4) transparent;
+}
+
+.spread-story .page--text.scrollable::-webkit-scrollbar {
+  width: 4px;
+}
+
+.spread-story .page--text.scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.spread-story .page--text.scrollable::-webkit-scrollbar-thumb {
+  background: rgba(20, 48, 71, 0.4);
+  border-radius: 999px;
+}
+
+/* Contenedor del texto, centrado horizontalmente */
+.spread-story .page--text-inner {
+  max-width: 70%;
+  margin: 10px auto 0;
+  color: #143047;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  /* Si alguna vez el texto es muy largo, permitimos scroll interno */
+  /*max-height: calc(100% - 120px);      
+  overflow-y: auto;*/
+}
+
+/* Onomatopeyas como "Tum, tum, tum..." un poco destacadas */
+.spread-story .page--text-inner .onomatopeya {
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: 12px 0 16px;
+}
+
+/* Botón de narración centrado, debajo del texto */
+.spread-story .page--text .btn-audio {
+  margin-top: 20px;
+  align-self: center;
+}
+
+/* ====== Controles de audio por página (play / pausa / stop) ====== */
+
+.page-audio-control {
+  margin-top: 20px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-audio-buttons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Botones redondos solo con ícono */
+.page-audio-control .btn-audio {
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Botón "activo" cuando la narración está sonando */
+.page-audio-control .btn-audio.is-playing {
+  background: rgba(248, 250, 252, 0.95);
+  color: #143047;
+  border-color: rgba(20, 48, 71, 0.9);
+}
+
+/* Barra de progreso de la narración */
+.page-audio-control .audio-progress {
+  width: 70%;
+  max-width: 260px;
+  height: 6px;
+  border-radius: 999px;
+  margin: 4px auto 0;
+  background: rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+}
+
+.page-audio-control .audio-progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #143047, #f2943d);
+  transition: width 0.1s linear;
+}
+
+/* UTILIDAD */
+
+.hidden {
+  display: none !important;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+  .page {
+    padding: 20px 16px 70px;
+  }
+
+  .page h2 {
+    font-size: 1.2rem;
+  }
+
+  .page p {
+    font-size: 0.95rem;
+  }
+
+  /* En pantallas pequeñas, seguimos usando el mismo criterio:
+    solo las páginas que JS marque como .scrollable tendrán scroll */
+  .spread-story .page--text.scrollable {
+    overflow-y: auto;
+  }
+}

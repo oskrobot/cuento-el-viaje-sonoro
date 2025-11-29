@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cuento interactivo - Prototipo</title>
+
+  <!-- Fuente infantil y legible -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <div class="info-audio">
+      🎧 Música de fondo y narración por página
+    </div>
+
+    <div class="controls-top">
+      <button class="btn btn-small btn-secondary" id="toggleMusicBtn">
+        🔊 Música: ON
+      </button>
+    </div>
+
+    <div class="book" id="book">
+      <!-- PORTADA -->
+      <section class="spread cover active" data-spread="0">
+        <img src="img/portada(2).png" alt="Portada del cuento" class="cover-image" />
+        <button class="btn btn-primary cover-start-btn" id="startStoryBtn">
+          📖 Iniciar cuento
+        </button>
+      </section>
+
+      <!-- DOBLE PÁGINA 1 -->
+      <section class="spread spread-story" data-spread="1">
+        <!-- Página izquierda: IMAGEN -->
+        <div class="page page--image">
+          <img
+            src="img/maestra-salon.jpeg"
+            alt="La maestra María Daslisa con sus estudiantes en el salón de clase"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              En un rincón de Colombia abrazado por montañas y bañado por ríos, existe un lugar hermoso e inspirador, donde cada mañana el viento lleva el suave aroma del café, y el sol pinta de anaranjado sus caminos y la caña panelera endulza los paladares de sus habitantes.
+            </p>
+            <p>
+              Allí, en un salón de clases habitado por las risas de los niños, sentada en un tronco, la maestra María Daslisa se imagina cómo acompañar a sus estudiantes a escuchar el mundo con el corazón.
+            </p>
+            <p>
+              Ella tiene a su cargo 15 niñas y niños de primera infancia que cada día sueñan con llegar tan alto como las estrellas en una noche de luna llena, esas que de vez en cuando dibujan en sus corazones, cada vez que su maestra les narra una historia.
+            </p>
+          </div>
+
+          <div class="page-audio-control" data-audio="audio/page1.mp3">
+            <div class="page-audio-buttons">
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="play"
+                aria-label="Reproducir narración de esta página"
+              >
+                ▶
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="pause"
+                aria-label="Pausar narración de esta página"
+              >
+                ⏸
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="stop"
+                aria-label="Detener narración de esta página"
+              >
+                ⏹
+              </button>
+            </div>
+
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DOBLE PÁGINA 2 -->
+      <section class="spread spread-story" data-spread="2">
+        <!-- Página izquierda: IMAGEN -->
+        <div class="page page--image">
+          <img
+            src="img/maestra_tambor.png"
+            alt="La maestra María Daslisa tocando un tambor junto al árbol"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              Mientras el cielo pierde su color azul y el sol se esconde tras las montañas anunciando el final del día, María Daslisa se sumerge en sus pensamientos, de repente, sin poder advertirlo, escucha un fuerte sonido que le roba el espacio al silencio que antes era invadido por las risas de los niños…
+            </p>
+
+            <p class="onomatopeya">
+              Tum, tum, tum…
+            </p>
+
+            <p>
+              Aunque la sorprende, ella rápidamente reconoce ese sonido, es un tambor llamador que resuena y se sincroniza con su corazón, siente cómo todo su cuerpo se estremece y sin tener algún control, nace en ella la necesidad de empezar a caminar… paso tras paso marcando el compás, el sonido se hace más fuerte, los latidos de su corazón se aceleran y empieza a sentir como si la tierra que recibe sus pasos la convocara.
+            </p>
+
+            <p>
+              Sin pasar mucho tiempo, llega por fin al origen del sonido.
+            </p>
+          </div>
+
+          <div class="page-audio-control" data-audio="audio/page2.mp3">
+            <div class="page-audio-buttons">
+              <button class="btn btn-audio" type="button" data-action="play" aria-label="Reproducir narración de esta página">▶</button>
+              <button class="btn btn-audio" type="button" data-action="pause" aria-label="Pausar narración de esta página">⏸</button>
+              <button class="btn btn-audio" type="button" data-action="stop" aria-label="Detener narración de esta página">⏹</button>
+            </div>
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- DOBLE PÁGINA 3 -->
+      <section class="spread spread-story" data-spread="3">
+        <!-- Página izquierda: COLLAGE DE IMÁGENES -->
+        <div class="page page--image">
+          <img
+            src="img/rostro_en_arbol(2).jpg"
+            alt="Rostro en el árbol"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              El tiempo se detiene por un instante y ella contempla la majestuosidad de aquel árbol, su tronco grande e imponente vibra al compás del tambor y sus amplísimas ramas, que sirven de refugio al calor, acompañan el ritmo como una danza de amor.
+            </p>
+
+            <p>
+              De repente, como un acto ancestral, María Daslisa ve como en el tronco del árbol poco a poco se dibuja el rostro de su abuela, sin dudarlo, acerca lentamente la palma de su mano para comprobar con su tacto lo que sus ojos le estaban mostrando… En ese encuentro, María Daslisa se conecta con el sonido del tambor y escucha la voz de su abuela, diciéndole… “este tambor, es el fundamento, el origen de todo, guarda en él, el pulso de la comunidad, es la voz de la tierra y el eco de quienes ya no están pero que aún nos acompañan.”
+            </p>
+          </div>
+
+          <!-- CONTROL DE AUDIO DE ESTA PÁGINA -->
+          <!-- Versión con iconos play / pausa / stop -->
+          <div class="page-audio-control" data-audio="audio/page3.mp3">
+            <div class="page-audio-buttons">
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="play"
+                aria-label="Reproducir narración de esta página"
+              >
+                ▶
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="pause"
+                aria-label="Pausar narración de esta página"
+              >
+                ⏸
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="stop"
+                aria-label="Detener narración de esta página"
+              >
+                ⏹
+              </button>
+            </div>
+
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+
+          <!--          
+          <button class="btn btn-audio" data-audio="audio/page3.mp3">
+            🔊 Escuchar narración de esta página
+          </button>
+          -->
+        </div>
+      </section>
+
+      <!-- DOBLE PÁGINA 4 -->
+      <section class="spread spread-story" data-spread="4">
+        <!-- Página izquierda: IMAGEN -->
+        <div class="page page--image">
+          <img
+            src="img/maestra_caminando.jpg"
+            alt="María Daslisa caminando"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              Una lágrima se desliza por la mejilla de María Daslisa y recuerda con alegría el momento en que decidió ser maestra, su mente la transporta años atrás y la lleva al Hogar Comunitario que tuvo su madre por más de 30 años, en el que declaró a corta edad, que su futuro serían las aulas, acompañando a la infancia de Colombia, en esa Colombia profunda, donde el acceso a lo básico es un privilegio y donde la Educación es un acto político, social y cultural.
+            </p>
+
+            <p>
+              Al cumplir la edad necesaria ella sintió que además del amor y la vocación debería hacer lo posible, para poder ir a estudiar y aprender todo lo necesario para cumplir su labor, cruzar ríos, recorrer largos caminos para llegar a su escuela o incluso estar alejada de su familia. Ver el rostro de su abuela, le trajo a su memoria todos estos recuerdos, sintió como se conectaba con todo su territorio y como su historia también era la historia de su comunidad.
+            </p>
+          </div>
+
+          <!-- Control de audio de la página 4 -->
+          <div class="page-audio-control" data-audio="audio/page4.mp3">
+            <div class="page-audio-buttons">
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="play"
+                aria-label="Reproducir narración de esta página"
+              >
+                ▶
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="pause"
+                aria-label="Pausar narración de esta página"
+              >
+                ⏸
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="stop"
+                aria-label="Detener narración de esta página"
+              >
+                ⏹
+              </button>
+            </div>
+
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DOBLE PÁGINA 5 -->
+      <section class="spread spread-story" data-spread="4">
+        <!-- Página izquierda: IMAGEN -->
+        <div class="page page--image">
+          <img
+            src="img/arbol_marimba.jpg"
+            alt="Maestra en el árbol con una marimba"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              El tambor seguía sonando mientras María Daslisa recordaba con alegría todo su caminar en el proceso de convertirse en maestra, aun con sus manos en el tronco, bajó su mirada y notó como las raíces del árbol se asomaban enérgicamente en la tierra, esta vez se movían a un ritmo distinto al tambor. María Daslisa tocó suavemente aquellas raíces y sintió cómo la madera cantaba y una pacífica pero silenciosa melodía recorría cada fibra de ella.
+            </p>
+
+            <p>
+              Su corazón le seguía diciendo que debía caminar y seguir aquellas raíces, pues solo de esta manera podría encontrar el origen de la melodía. Así continuó su camino, notó entonces como cada vez que avanzaba, la melodía se hacía más fuerte y más clara. Pronto María Daslisa reconoció el sonido profundo de la marimba, percibió con todo su cuerpo las resonancias cálidas y vibraciones envolventes que se encontraba en el ambiente.
+            </p>
+          </div>
+
+          <!-- Control de audio de la página 4 -->
+          <div class="page-audio-control" data-audio="audio/page5.mp3">
+            <div class="page-audio-buttons">
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="play"
+                aria-label="Reproducir narración de esta página"
+              >
+                ▶
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="pause"
+                aria-label="Pausar narración de esta página"
+              >
+                ⏸
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="stop"
+                aria-label="Detener narración de esta página"
+              >
+                ⏹
+              </button>
+            </div>
+
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DOBLE PÁGINA 6 -->
+      <section class="spread spread-story" data-spread="4">
+        <!-- Página izquierda: IMAGEN -->
+        <div class="page page--image">
+          <img
+            src="img/maestra_ cantando_con_abuelas(2).png"
+            alt="Maestra cantando con abuelas"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              Sin perder un solo minuto, María Daslisa continuó por el camino, lentamente sus pies se fundieron con el agua del río, levantó su rostro al cielo, cerró los ojos y se permitió sentir como el agua vibraba al ritmo de este bello instrumento, sintió como esa melodía dulce y tranquila se originaba desde el suelo pedregoso del río, subía a través de sus pies y llegaba justo a su corazón, entonces, recordó cómo de niña, el río era su punto de encuentro y diversión, un lugar cargado de recuerdos y memorias de familias al lado de la olla, compartiendo el alimento, pero también la fuente principal de agua para su comunidad, fuente de sustento económico, así como un precursor de historias y aprendizajes colectivos, historias que hablaban de otros continentes y de las raíces que hacían parte de su identidad negra, de su afrocolombianidad.
+            </p>
+
+            <p>
+              Escuchó entonces una canción sin letra que le contaba la historia de sus antepasados, que le hablaba de sus raíces africanas, que le narraba la historia de resistencia y espiritualidad de su pueblo, una canción que le recordaba los grandes y significativos aportes de su territorio y cultura para el desarrollo de su labor como maestra y el acompañamiento de las niñas y niños de primera infancia.
+            </p>
+          </div>
+
+          <!-- Control de audio de la página 4 -->
+          <div class="page-audio-control" data-audio="audio/page6.mp3">
+            <div class="page-audio-buttons">
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="play"
+                aria-label="Reproducir narración de esta página"
+              >
+                ▶
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="pause"
+                aria-label="Pausar narración de esta página"
+              >
+                ⏸
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="stop"
+                aria-label="Detener narración de esta página"
+              >
+                ⏹
+              </button>
+            </div>
+
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DOBLE PÁGINA 7 -->
+      <section class="spread spread-story" data-spread="4">
+        <!-- Página izquierda: IMAGEN -->
+        <div class="page page--image">
+          <img
+            src="img/maestra_fogon.jpg"
+            alt="Maestra al pie de la montaña y un fogón"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              Estando en el río con el corazón lleno de alegría, María Daslisa se preguntaba qué más necesitaba aprender para fortalecer su práctica pedagógica, y de un momento a otro, una suave brisa acarició su cuerpo, sacándola de sus pensamientos y animándola a emprender nuevamente el camino. No pasó mucho tiempo, y al llegar al pie de una gran montaña, vio cómo desde la tierra se formaba un sendero angosto que rodeaba la ladera ziczag y que la invitaban a subir a la cima, de repente, al poner sus pies en la senda, una apacible voz se asomó tímidamente a los oídos de María Daslisa y en un tono dulce y melódico le dijo -“ahora escucha con atención, soy parte de esas voces ancestrales, aquellas que algunas veces son olvidadas, pero que plantan las semillas de donde nace la vida, siempre he sido parte de ti,  porque traes mi cultura en el alma, quiero ayudarte a recordar tu historia, tus tradiciones y las memorias ya olvidadas, recuerda recorrer los caminos que ya fueron andados, porque en ellos están nuestras raíces, está lo que somos”-. María Daslisa recordó entonces toda su historia y sonrió. Se detuvo en uno de sus más bonitos recuerdos y evocó a su abuela sentada alrededor del fogón poniendo sobre la callana, la arepa cojonga y enseñándole cómo hacerla paso a paso, mientras le contaba cómo su abuela se la había enseñado hacer a ella, su recuerdo era tan intacto que aún podía sentir el aroma del maíz tostado.
+            </p>
+          </div>
+
+          <!-- Control de audio de la página 4 -->
+          <div class="page-audio-control" data-audio="audio/page7.mp3">
+            <div class="page-audio-buttons">
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="play"
+                aria-label="Reproducir narración de esta página"
+              >
+                ▶
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="pause"
+                aria-label="Pausar narración de esta página"
+              >
+                ⏸
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="stop"
+                aria-label="Detener narración de esta página"
+              >
+                ⏹
+              </button>
+            </div>
+
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DOBLE PÁGINA 8 -->
+      <section class="spread spread-story" data-spread="4">
+        <!-- Página izquierda: IMAGEN -->
+        <div class="page page--image">
+          <img
+            src="img/maestra_subiendo.jpg"
+            alt="Maestra subiendo la montaña"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              La brisa que se hacía más fuerte, la volvió a acariciar, indicándole que debía continuar con el  recorrido, sin más espera empezó la marcha y a mitad del camino, se detuvo nuevamente a escuchar una nueva voz que le dijo- soy todas las voces de la comunidad, la que siempre está a tu alrededor y nunca te deja sola, soy el árbol, el agua, las montañas, las familias, los mayores, tu territorio…- María Daslisa recordó con amor a las abuelas cantando en las noches de navidad, recordó a su familia junto a la olla negra llena de comida y recordó los sabores, olores, colores y paisajes de su tierra… se sintió acompañada.
+            </p>
+
+            <p>
+              Continuó su ascenso y justo antes de llegar a la cima, la brisa pronto se convirtió en una ráfaga de viento que la envolvió y trajo consigo la última voz, - soy la voz de tus niños y niñas, quiero contarte mis ideas, que me escuches y que me reconozcas, que sepas quien soy, las cosas que más me gustan y que me asombran, mis sueños, mis intereses, mis dudas y mis contradicciones, deseo que juntos creemos nuevas historias, nuevas formas de jugar, explorar, leer y aprender del mundo-, la maestra María Daslisa no pudo más que llorar de alegría al escuchar esta voz, por fin sentía que ya estaba completa.
+            </p>
+          </div>
+
+          <!-- Control de audio de la página 4 -->
+          <div class="page-audio-control" data-audio="audio/page8.mp3">
+            <div class="page-audio-buttons">
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="play"
+                aria-label="Reproducir narración de esta página"
+              >
+                ▶
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="pause"
+                aria-label="Pausar narración de esta página"
+              >
+                ⏸
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="stop"
+                aria-label="Detener narración de esta página"
+              >
+                ⏹
+              </button>
+            </div>
+
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DOBLE PÁGINA 9 -->
+      <section class="spread spread-story" data-spread="4">
+        <!-- Página izquierda: IMAGEN -->
+        <div class="page page--image">
+          <img
+            src="img/maestra_en_la_cima.jpg"
+            alt="Maestra en la cima de la montaña"
+          />
+        </div>
+
+        <!-- Página derecha: TEXTO -->
+        <div class="page page--text">
+          <div class="page--text-inner">
+            <p>
+              Al llegar a la cima de la montaña, las sonoridades se conjugaron en un sólo compás, el tambor, la marimba y las voces, crearon una melodía con una armonía perfecta. María Daslisa comprendió que “el ser maestra, nunca se sintió como una labor individual, es un diálogo entre voces… Cada voz tiene su papel, su ritmo, su momento para entrar. “cuando las voces se unen en un mismo canto, cada sonido tiene su lugar y su sentido”.
+            </p>
+
+            <p>
+              De regreso a la escuela, María Daslisa percibe su comunidad con cada uno de sus sentidos, ahora escucha todos los sonidos y detalla con el corazón cada paisaje que acompañaba su andar, ella aprendió que su labor como maestra de primera infancia, se conecta con su territorio, con su historia y con su cultura y sobre todo, con las voces de sus niñas y niños, a quienes también acompaña a que construyan su propia historia y se redescubran en su caminar.
+            </p>
+          </div>
+
+          <!-- Control de audio de la página 4 -->
+          <div class="page-audio-control" data-audio="audio/page9.mp3">
+            <div class="page-audio-buttons">
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="play"
+                aria-label="Reproducir narración de esta página"
+              >
+                ▶
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="pause"
+                aria-label="Pausar narración de esta página"
+              >
+                ⏸
+              </button>
+              <button
+                class="btn btn-audio"
+                type="button"
+                data-action="stop"
+                aria-label="Detener narración de esta página"
+              >
+                ⏹
+              </button>
+            </div>
+
+            <div class="audio-progress">
+              <div class="audio-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="controls-bottom" id="controlsBottom">
+      <button class="btn" id="prevBtn">⬅ Página anterior</button>
+      <button class="btn" id="nextBtn">Página siguiente ➡</button>
+    </div>
+  </div>
+
+  <!-- AUDIO: música de fondo -->
+  <audio id="bg-music" src="audio/musica_fondo.mp3" loop></audio>
+
+  <!-- AUDIO: narración por página (se cambia el src desde JS) -->
+  <audio id="page-audio"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
