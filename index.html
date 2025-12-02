@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Cuento interactivo - Prototipo</title>
-
-  <!-- Fuente infantil y legible -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuento interactivo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
@@ -22,6 +21,15 @@
         🔊 Música: ON
       </button>
     </div>
+
+    <!-- Botón para cerrar el libro -->
+    <button
+      class="btn btn-small btn-secondary close-book-btn hidden"
+      id="closeBookBtn"
+      type="button"
+    >
+      📕 Cerrar libro
+    </button>
 
     <div class="book" id="book">
       <!-- PORTADA -->
@@ -222,7 +230,7 @@
             </p>
           </div>
 
-          <!-- Control de audio de la página 4 -->
+          <!-- Control de audio de la página -->
           <div class="page-audio-control" data-audio="audio/page4.mp3">
             <div class="page-audio-buttons">
               <button
@@ -259,7 +267,7 @@
       </section>
 
       <!-- DOBLE PÁGINA 5 -->
-      <section class="spread spread-story" data-spread="4">
+      <section class="spread spread-story" data-spread="5">
         <!-- Página izquierda: IMAGEN -->
         <div class="page page--image">
           <img
@@ -280,7 +288,7 @@
             </p>
           </div>
 
-          <!-- Control de audio de la página 4 -->
+          <!-- Control de audio de la página -->
           <div class="page-audio-control" data-audio="audio/page5.mp3">
             <div class="page-audio-buttons">
               <button
@@ -317,11 +325,11 @@
       </section>
 
       <!-- DOBLE PÁGINA 6 -->
-      <section class="spread spread-story" data-spread="4">
+      <section class="spread spread-story" data-spread="6">
         <!-- Página izquierda: IMAGEN -->
         <div class="page page--image">
           <img
-            src="img/maestra_ cantando_con_abuelas(2).png"
+            src="img/maestra_cantando_con_abuelas(2).png"
             alt="Maestra cantando con abuelas"
           />
         </div>
@@ -338,7 +346,7 @@
             </p>
           </div>
 
-          <!-- Control de audio de la página 4 -->
+          <!-- Control de audio de la página -->
           <div class="page-audio-control" data-audio="audio/page6.mp3">
             <div class="page-audio-buttons">
               <button
@@ -375,7 +383,7 @@
       </section>
 
       <!-- DOBLE PÁGINA 7 -->
-      <section class="spread spread-story" data-spread="4">
+      <section class="spread spread-story" data-spread="7">
         <!-- Página izquierda: IMAGEN -->
         <div class="page page--image">
           <img
@@ -392,7 +400,7 @@
             </p>
           </div>
 
-          <!-- Control de audio de la página 4 -->
+          <!-- Control de audio de la página -->
           <div class="page-audio-control" data-audio="audio/page7.mp3">
             <div class="page-audio-buttons">
               <button
@@ -429,7 +437,7 @@
       </section>
 
       <!-- DOBLE PÁGINA 8 -->
-      <section class="spread spread-story" data-spread="4">
+      <section class="spread spread-story" data-spread="8">
         <!-- Página izquierda: IMAGEN -->
         <div class="page page--image">
           <img
@@ -450,7 +458,7 @@
             </p>
           </div>
 
-          <!-- Control de audio de la página 4 -->
+          <!-- Control de audio de la página -->
           <div class="page-audio-control" data-audio="audio/page8.mp3">
             <div class="page-audio-buttons">
               <button
@@ -487,7 +495,7 @@
       </section>
 
       <!-- DOBLE PÁGINA 9 -->
-      <section class="spread spread-story" data-spread="4">
+      <section class="spread spread-story" data-spread="9">
         <!-- Página izquierda: IMAGEN -->
         <div class="page page--image">
           <img
@@ -508,7 +516,7 @@
             </p>
           </div>
 
-          <!-- Control de audio de la página 4 -->
+          <!-- Control de audio de la página -->
           <div class="page-audio-control" data-audio="audio/page9.mp3">
             <div class="page-audio-buttons">
               <button

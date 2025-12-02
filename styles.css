@@ -74,16 +74,6 @@ body {
   display: block;
 }
 
-/*.cover-start-btn {
-  position: absolute;
-  top: 50%;          
-  right: 312px;       
-  left: auto;
-  bottom: auto;
-  transform: translateY(-50%);
-  z-index: 5;  
-}*/
-
 /* Estilo base del botón "Iniciar cuento" */
 .btn.cover-start-btn {
   position: absolute;
@@ -151,9 +141,9 @@ body {
 /* BOTONES */
 
 .btn {
-  background: rgba(20, 48, 71, 0.85);             /* azul oscuro semitransparente */
+  background: rgba(20, 48, 71, 0.85);             
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.85);    /* borde clarito */
+  border: 1px solid rgba(255, 255, 255, 0.85);    
   border-radius: 999px;
   padding: 4px 8px;
   cursor: pointer;
@@ -171,8 +161,8 @@ body {
 .btn:hover {
   /*transform: translateY(-1px);*/
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  background: rgba(248, 250, 252, 0.95);         /* casi blanco */
-  color: #143047;                                /* azul oscuro de texto */
+  background: rgba(248, 250, 252, 0.95);         
+  color: #143047;                                
   border-color: rgba(20, 48, 71, 0.9);
 }
 
@@ -181,9 +171,8 @@ body {
   box-shadow: none;
 }
 
-.btn-primary {
-  /* si quieres que el de portada se vea un poco más cálido */
-  background: rgba(242, 148, 61, 0.9);           /* basado en tu #f2943d */
+.btn-primary {  
+  background: rgba(242, 148, 61, 0.9);           
   color: #143047;
 }
 
@@ -226,8 +215,8 @@ body {
 
 /* Botón de "Escuchar narración de esta página" dentro de la hoja */
 .btn-audio {
-  margin-top: 16px;      /* separa el botón del texto, pero sin empujarlo al borde */
-  align-self: center;    /* centrado en la página de texto */
+  margin-top: 16px;      
+  align-self: center;    
 }
 
 /* Estado visual cuando el audio está reproduciéndose */
@@ -278,6 +267,20 @@ body {
   align-items: center;
 }
 
+/* Botón lateral para "Cerrar libro" */
+.close-book-btn {
+  position: absolute;
+  right: 8px;          /* pegado al borde derecho del libro */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 15;
+  writing-mode: vertical-rl;   /* texto en vertical tipo lomo de libro */
+  text-orientation: mixed;
+  padding: 8px 6px;
+}
+/* Si prefieres el texto horizontal, comenta las dos líneas de writing-mode/text-orientation */
+
+
 .info-audio {
   position: absolute;
   top: 8px;
@@ -297,14 +300,12 @@ body {
   animation: pageTurnNext 0.9s ease-out forwards;
   z-index: 2;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-  /*transform-origin: left center;*/
 }
 
 .page-turn-prev {
   animation: pageTurnPrev 0.9s ease-out forwards;
   z-index: 2;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-  /*transform-origin: right center;*/
 }
 
 /* Ir hacia adelante: la página derecha se levanta y gira hacia la izquierda */
@@ -338,7 +339,7 @@ body {
 .page-intro-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;  /* la imagen llena la página sin deformarse */
+  object-fit: cover;  
   display: block;
 }
 
@@ -368,7 +369,7 @@ body {
   height: 6px;
   border-radius: 999px;
   margin: 8px auto 0;
-  background: rgba(255, 255, 255, 0.4);   /* clarito y semitransparente */
+  background: rgba(255, 255, 255, 0.4);   
   overflow: hidden;
 }
 
@@ -391,7 +392,7 @@ body {
 
 /* Página izquierda: fondo suave para que el texto respire */
 .page-escena2-text {
-  background: #fdf1e3; /* tono clarito derivado del naranja #f2943d */
+  background: #fdf1e3; 
   justify-content: flex-start;
 }
 
@@ -440,20 +441,13 @@ body {
   background: #000; /* mientras carga la imagen */
 }
 
-.spread-story .page--image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;  /* la imagen llena la hoja sin deformarse */
-  display: block;
-}
-
 /* Página de texto: fondo naranja del cuento y layout en columna */
 .spread-story .page--text {
-  background: #f2943d;                  /* mismo color que ya estabas usando */
+  background: #f2943d;                  
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 40px 32px 40px;              /* espacio arriba y abajo */
+  padding: 40px 32px 40px;             
 }
 
 /* Por defecto, sin scroll visible */

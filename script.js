@@ -4,6 +4,7 @@ const nextBtn = document.getElementById("nextBtn");
 const startStoryBtn = document.getElementById("startStoryBtn");
 const toggleMusicBtn = document.getElementById("toggleMusicBtn");
 const controlsBottom = document.getElementById("controlsBottom");
+const closeBookBtn = document.getElementById("closeBookBtn");
 
 const bgMusic = document.getElementById("bg-music");
 const pageAudio = document.getElementById("page-audio");
@@ -18,10 +19,15 @@ const textPages = Array.from(
 
 // Marca como "scrollable" solo las páginas cuyo contenido no cabe en el alto disponible
 function updateScrollablePages() {
-  textPages.forEach((page) => {
-    page.classList.remove("scrollable");
+  // Solo páginas de texto dentro del spread activo
+  const activeSpread = spreads[currentSpread];
+  const visibleTextPages = activeSpread
+    ? Array.from(activeSpread.querySelectorAll(".page--text"))
+    : [];
 
-    // Si el contenido interno es más alto que la propia página (con un pequeño margen), activamos scroll
+  textPages.forEach((page) => page.classList.remove("scrollable"));
+
+  visibleTextPages.forEach((page) => {
     const extra = page.scrollHeight - page.clientHeight;
     if (extra > 5) {
       page.classList.add("scrollable");
@@ -80,17 +86,30 @@ bgMusic.volume = 0.1;
 let currentSpread = 0;
 let musicEnabled = true;
 let isTurning = false; // para evitar doble clic durante la animación
+let isClosingBook = false;
 
 // ---- Botones de navegación ----
 function updateButtons() {
-  prevBtn.disabled = currentSpread === 0;
+  const onCover = currentSpread === 0;
+
+  // Habilitar/deshabilitar navegación
+  prevBtn.disabled = onCover;
   nextBtn.disabled = currentSpread === spreads.length - 1;
 
   // Ocultar controles de navegación en la portada
-  if (currentSpread === 0) {
+  if (onCover) {
     controlsBottom.classList.add("hidden");
   } else {
     controlsBottom.classList.remove("hidden");
+  }
+
+  // Mostrar / ocultar botón "Cerrar libro"
+  if (closeBookBtn) {
+    if (onCover) {
+      closeBookBtn.classList.add("hidden");
+    } else {
+      closeBookBtn.classList.remove("hidden");
+    }
   }
 }
 
@@ -190,6 +209,27 @@ nextBtn.addEventListener("click", () => {
   showSpread(currentSpread + 1, "next");
 });
 
+/* función para cerrar el libro */
+function closeBook() {
+  // Si ya estamos en la portada o se está girando una página, no hacer nada
+  if (currentSpread === 0 || isTurning) return;
+
+  // Volver directamente al spread 0 (portada)
+  // NOTA: como la portada no tiene .page, showSpread hará un cambio rápido sin animación de hoja
+  showSpread(0, "prev");
+}
+
+/* Listener del botón "Cerrar libro" */
+if (closeBookBtn) {
+  closeBookBtn.addEventListener("click", closeBook);
+}
+
+/* Listener del botón "Cerrar libro" */
+if (closeBookBtn) {
+  closeBookBtn.addEventListener("click", closeBook);
+}
+
+
 // Botón de la portada → primera doble página
 startStoryBtn.addEventListener("click", () => {
   showSpread(1, "next");
@@ -280,7 +320,7 @@ pageAudio.addEventListener("ended", () => {
 
   const fill = audioProgressMap.get(currentAudioControl);
   if (fill) {
-    fill.style.width = "100%"; // si prefieres que vuelva a cero, pon "0%"
+    fill.style.width = "100%"; 
   }
 
   setControlPlaying(currentAudioControl, false);
